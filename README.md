@@ -10,6 +10,7 @@ June, 2025. <br />
 
 Full-stack workspace, project, and task management platform built using Next.js 14, React, TypeScript, Shadcn UI, Tailwind CSS, Hono, and Appwrite.
 
+<<<<<<< HEAD
 ## Screenshots
 
 ![Landing Page](/landin-demo.jpg)
@@ -25,6 +26,8 @@ Full-stack workspace, project, and task management platform built using Next.js 
 ![Task Overview](/task-overview-demo.jpg)
 
 
+=======
+>>>>>>> 5c0483aea83be9cc9f26b67d55ea786ac787f4d3
 ## Author
 
 Kaung Thanlwin Kyaw  
