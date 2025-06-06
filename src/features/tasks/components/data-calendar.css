@@ -1,0 +1,174 @@
+.rbc-header {
+  @apply text-sm;
+  @apply font-normal;
+  @apply pb-4;
+  @apply text-muted-foreground;
+  @apply border-b-0;
+}
+
+.rbc-header + .rbc-header {
+  @apply border-l-0;
+}
+
+.rbc-button-link {
+  @apply text-xs;
+  @apply font-normal;
+  @apply text-muted-foreground;
+}
+
+/* Increase calendar cell height for multiple tasks */
+.rbc-month-row {
+  @apply min-h-[250px]; /* Increased from 180px */
+  @apply border-t;
+  @apply border-x;
+}
+
+:not(.rbc-month-row ~ .rbc-month-row).rbc-month-row {
+  @apply rounded-t-md;
+}
+
+.rbc-month-row:last-of-type {
+  @apply border-b;
+  @apply rounded-b-md;
+}
+
+.rbc-month-view {
+  @apply border-none;
+}
+
+/* Increase date cell height for multiple tasks */
+.rbc-date-cell {
+  @apply p-2;
+  min-height: 200px; /* Set minimum height for each day cell */
+}
+
+.rbc-today {
+  @apply bg-blue-50;
+}
+
+.rbc-off-range-bg {
+  @apply bg-neutral-100;
+}
+
+/* Improve event visibility and spacing */
+.rbc-event {
+  background-color: transparent !important;
+  border: none !important;
+  padding: 0 !important;
+  margin: 2px 0 !important; /* Increased margin between events */
+}
+
+.rbc-event-content {
+  padding: 2px 4px;
+  border-radius: 4px;
+  font-size: 11px;
+  line-height: 1.2;
+}
+
+/* Ensure events don't overlap */
+.rbc-row-content {
+  z-index: 10;
+}
+
+/* Enhanced "show more" link styling */
+.rbc-show-more {
+  background-color: #3b82f6;
+  color: white;
+  border: 1px solid #2563eb;
+  border-radius: 4px;
+  padding: 4px 8px;
+  font-size: 11px;
+  text-align: center;
+  cursor: pointer;
+  font-weight: 500;
+  margin-top: 4px;
+  transition: background-color 0.2s;
+}
+
+.rbc-show-more:hover {
+  background-color: #2563eb;
+}
+
+/* Popup styling for overflow events */
+.rbc-overlay {
+  background-color: white;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  padding: 12px;
+  max-width: 300px;
+  z-index: 1000;
+}
+
+.rbc-overlay-header {
+  font-weight: 600;
+  font-size: 14px;
+  margin-bottom: 8px;
+  color: #374151;
+}
+
+/* Mobile touch optimizations */
+.touch-manipulation {
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Mobile responsive styles */
+@media (max-width: 768px) {
+  .cursor-pointer {
+    cursor: pointer;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+  
+  .active\:scale-95:active {
+    transform: scale(0.95);
+    transition: transform 0.1s ease;
+  }
+  
+  .rbc-calendar {
+    @apply text-xs;
+  }
+  
+  .rbc-event {
+    @apply text-xs;
+    @apply p-1;
+  }
+  
+  .rbc-header {
+    @apply text-xs;
+    @apply pb-2;
+  }
+  
+  /* Mobile calendar adjustments */
+  .rbc-month-row {
+    @apply min-h-[120px];
+  }
+  
+  .rbc-date-cell {
+    @apply p-1;
+  }
+}
+
+/* Large desktop styles for better multiple task display */
+@media (min-width: 1025px) {
+  .rbc-month-row {
+    @apply min-h-[300px]; /* Even more space on large screens */
+  }
+  
+  .rbc-date-cell {
+    @apply p-3;
+    min-height: 240px;
+  }
+  
+  .rbc-event-content {
+    padding: 3px 5px;
+    font-size: 12px;
+  }
+  
+  .rbc-show-more {
+    padding: 6px 10px;
+    font-size: 12px;
+  }
+}
