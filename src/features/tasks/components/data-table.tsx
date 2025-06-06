@@ -78,7 +78,7 @@ export function DataTable<TData, TValue>({
       {/* View Mode Toggle - Hidden on auto-switch */}
       <div className="hidden md:flex items-center gap-2">
         <Button
-          variant={viewMode === 'table' ? 'default' : 'outline'}
+          variant={viewMode === 'table' ? 'primary' : 'outline'}
           size="sm"
           onClick={() => setViewMode('table')}
         >
@@ -86,7 +86,7 @@ export function DataTable<TData, TValue>({
           Table
         </Button>
         <Button
-          variant={viewMode === 'cards' ? 'default' : 'outline'}
+          variant={viewMode === 'cards' ? 'primary' : 'outline'}
           size="sm"
           onClick={() => setViewMode('cards')}
         >
