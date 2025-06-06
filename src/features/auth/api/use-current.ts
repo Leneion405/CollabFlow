@@ -12,9 +12,16 @@ export const useCurrent = () => {
         return null;
       }
 
-      const { data } = await response.json();
-
-      return data;
+      // Fixed: Properly handle both success and error response types
+      const json = await response.json();
+      
+      // Type guard to check if response has data property
+      if ('data' in json) {
+        return json.data;
+      }
+      
+      // If no data property, return null (likely an error response)
+      return null;
     },
   });
 
