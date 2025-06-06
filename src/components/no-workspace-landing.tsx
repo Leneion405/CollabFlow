@@ -30,31 +30,30 @@ export const NoWorkspaceLanding = () => {
   const [error, setError] = useState("");
 
   const handleJoinWorkspace = async () => {
-  if (!inviteCode.trim()) return;
-  
-  setIsJoining(true);
-  setError("");
-  
-  try {
-    // Fixed API URL to match your route
-    const response = await fetch(`/api/invitations/lookup/${inviteCode.trim()}`);
-    const data = await response.json();
+    if (!inviteCode.trim()) return;
     
-    if (response.ok && data.workspaceId) {
-      // Navigate to the full URL with workspace ID
-      router.push(`/workspaces/${data.workspaceId}/join/${inviteCode.trim()}`);
-    } else {
-      // Handle invalid invite code
-      setError(data.error || "Invalid invite code. Please check and try again.");
+    setIsJoining(true);
+    setError("");
+    
+    try {
+      // Fixed API URL to match your route
+      const response = await fetch(`/api/invitations/lookup/${inviteCode.trim()}`);
+      const data = await response.json();
+      
+      if (response.ok && data.workspaceId) {
+        // Navigate to the full URL with workspace ID
+        router.push(`/workspaces/${data.workspaceId}/join/${inviteCode.trim()}`);
+      } else {
+        // Handle invalid invite code
+        setError(data.error || "Invalid invite code. Please check and try again.");
+        setIsJoining(false);
+      }
+    } catch (error) {
+      console.error("Error looking up invite code:", error);
+      setError("Unable to join workspace. Please try again later.");
       setIsJoining(false);
     }
-  } catch (error) {
-    console.error("Error looking up invite code:", error);
-    setError("Unable to join workspace. Please try again later.");
-    setIsJoining(false);
-  }
-};
-
+  };
 
   const handleCreateWorkspace = () => {
     open();
@@ -72,7 +71,7 @@ export const NoWorkspaceLanding = () => {
           </div>
           
           <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            You're not in a workspace yet
+            {"You're not in a workspace yet"}
           </h1>
           
           <p className="text-xl text-gray-600 mb-8 max-w-3xl mx-auto">

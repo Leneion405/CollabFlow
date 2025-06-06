@@ -1,4 +1,4 @@
-import { FolderIcon, ListChecksIcon, UserIcon, AlertTriangleIcon, Search, X, Filter, ChevronDown } from "lucide-react";
+import { FolderIcon, ListChecksIcon, UserIcon, AlertTriangleIcon, Search, X, Filter } from "lucide-react";
 import { useGetMembers } from "@/features/members/api/use-get-members";
 import { useGetProjects } from "@/features/projects/api/use-get-projects";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
@@ -6,7 +6,6 @@ import { DatePicker } from "@/components/date-picker";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Card, CardContent } from "@/components/ui/card";
 import { Drawer, DrawerContent, DrawerHeader, DrawerTitle, DrawerTrigger, DrawerFooter } from "@/components/ui/drawer";
 import { useState } from "react";
 import {
@@ -73,20 +72,6 @@ export const DataFilters = ({ hideProjectFilter, hideAssigneeFilter }: DataFilte
   // Updated search function to filter by whole words
   const onSearchChange = (value: string) => {
     setFilters({ search: value || null });
-  };
-
-  // Helper function to check if text matches search as whole words
-  const matchesSearch = (text: string, searchTerm: string): boolean => {
-    if (!searchTerm) return true;
-    
-    // Escape special regex characters in user input
-    const escaped = searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    
-    // Split search term into words and create regex for each
-    const words = escaped.trim().split(/\s+/);
-    const regex = new RegExp(`\\b(${words.join('|')})\\b`, 'i');
-    
-    return regex.test(text);
   };
 
   // Helper functions to convert between Date and string

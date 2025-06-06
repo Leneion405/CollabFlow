@@ -1,6 +1,6 @@
 "use client";
 
-import { Phone, Mail, User, FileText, CheckCircle, Shield, Crown, Home, ArrowLeft } from "lucide-react";
+import { Phone, Mail, User, FileText, CheckCircle, Shield, Crown, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";

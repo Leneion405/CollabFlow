@@ -8,7 +8,16 @@ import { useGetMembers } from "@/features/members/api/use-get-members";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 import { useGetWorkspaceInfo } from "@/features/workspaces/api/use-get-workspace-info";
 import { InviteButton } from "@/features/invitations/components/invite-button";
-import { useGetInvites } from "@/features/invitations/api/useGetInvites"; // make sure this exists
+import { useGetInvites } from "@/features/invitations/api/useGetInvites";
+import { Member } from "../types";
+
+// Define the invite type based on your invitation structure
+type Invite = {
+  recipientId: string;
+  workspaceId: string;
+  workspaceName?: string;
+  $id: string;
+};
 
 export const AllMembersCard = () => {
   const { data: allMembersData, isLoading, isError } = useGetAllMembers();
@@ -17,14 +26,14 @@ export const AllMembersCard = () => {
   const { data: workspaceMembersData } = useGetMembers({ workspaceId });
   const { data: invitesData } = useGetInvites();
 
-  const workspaceMemberIds =
-    workspaceMembersData?.documents.map((m: any) => m.userId) || [];
-  const invitedMemberIds =
-    invitesData?.map((invite: any) => invite.recipientId) || [];
+  const workspaceMemberIds: string[] =
+    workspaceMembersData?.documents.map((m: Member) => m.userId) || [];
+  const invitedMemberIds: string[] =
+    invitesData?.map((invite: Invite) => invite.recipientId) || [];
 
-  const filteredMembers =
+  const filteredMembers: Member[] =
     allMembersData?.documents.filter(
-      (member: any) =>
+      (member: Member) =>
         !workspaceMemberIds.includes(member.$id) &&
         !invitedMemberIds.includes(member.$id)
     ) || [];
@@ -41,7 +50,7 @@ export const AllMembersCard = () => {
           className="max-h-72 sm:max-h-96 overflow-y-auto w-full space-y-2"
           style={{ minHeight: 0 }}
         >
-          {filteredMembers.map((member: any) => (
+          {filteredMembers.map((member: Member) => (
             <div key={member.$id} className="flex items-center gap-2 py-2">
               <MemberAvatar name={member.name} />
               <div className="flex-1 min-w-0">

@@ -1,14 +1,31 @@
 import { toast } from 'react-hot-toast';
 
-export const showErrorToast = (error: any) => {
+export const showErrorToast = (error: unknown) => {
   let message = 'An unexpected error occurred';
   
-  if (error?.message) {
-    message = error.message;
+  // Type guard for objects with message property
+  if (typeof error === 'object' && error !== null && 'message' in error) {
+    const errorWithMessage = error as { message?: string };
+    if (typeof errorWithMessage.message === 'string') {
+      message = errorWithMessage.message;
+    }
   } else if (typeof error === 'string') {
     message = error;
-  } else if (error?.response?.data?.message) {
-    message = error.response.data.message;
+  } else if (
+    typeof error === 'object' &&
+    error !== null &&
+    'response' in error
+  ) {
+    const errorWithResponse = error as {
+      response?: {
+        data?: {
+          message?: string;
+        };
+      };
+    };
+    if (typeof errorWithResponse.response?.data?.message === 'string') {
+      message = errorWithResponse.response.data.message;
+    }
   }
 
   toast.error(message, {

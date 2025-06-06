@@ -39,6 +39,17 @@ const localizer = dateFnsLocalizer({
   locales,
 });
 
+// Define proper types for calendar events
+type CalendarEvent = {
+  start: Date;
+  end: Date;
+  title: string;
+  project: any; // You can replace with proper project type
+  assignee: any; // You can replace with proper assignee type
+  status: any; // You can replace with proper status type
+  id: string;
+};
+
 interface CustomToolbarProps {
   date: Date;
   onNavigate: (action: "PREV" | "NEXT" | "TODAY") => void;
@@ -91,7 +102,7 @@ const MobileDayCard = ({
   onSelect 
 }: {
   date: Date;
-  events: any[];
+  events: CalendarEvent[];
   isCurrentMonth: boolean;
   isSelected: boolean;
   onSelect: (date: Date) => void;
@@ -154,7 +165,7 @@ const MobileDayCard = ({
 };
 
 // Mobile List View Component
-const MobileListView = ({ events, selectedDate }: { events: any[]; selectedDate: Date }) => {
+const MobileListView = ({ events, selectedDate }: { events: CalendarEvent[]; selectedDate: Date }) => {
   const dayEvents = events.filter(event => 
     isSameDay(new Date(event.start), selectedDate)
   );
@@ -220,8 +231,8 @@ export const DataCalendar = ({ data }: DataCalendarProps) => {
 
   const [value, setValue] = useState(initialDate);
 
-  // Only add events with valid due dates
-  const events = data
+  // Only add events with valid due dates - Fixed type
+  const events: CalendarEvent[] = data
     .filter((task) => task.dueDate && isValid(new Date(task.dueDate)))
     .map((task) => ({
       start: new Date(task.dueDate!),
@@ -288,6 +299,7 @@ export const DataCalendar = ({ data }: DataCalendarProps) => {
             <List className="size-4 mr-2" />
             List
           </Button>
+
         </div>
       )}
 

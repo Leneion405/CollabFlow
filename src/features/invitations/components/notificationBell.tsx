@@ -55,8 +55,12 @@ export const NotificationBell = () => {
       await refetch();
       setIsOpen(false);
       router.push(`/workspaces/${workspaceId}`);
-    } catch (err: any) {
-      toast.error(err.message || "Failed to accept invite");
+    } catch (err: unknown) {
+      if (err instanceof Error) {
+        toast.error(err.message || "Failed to accept invite");
+      } else {
+        toast.error("Failed to accept invite");
+      }
     }
   };
 
@@ -68,8 +72,8 @@ export const NotificationBell = () => {
       });
       toast.success("Invite declined.");
       await refetch();
-    } catch (err: any) {
-      toast.error(err.message || "Failed to decline invite");
+    } catch {
+      toast.error("Failed to decline invite");
     }
   };
 
@@ -87,7 +91,7 @@ export const NotificationBell = () => {
       // Navigate to the specific task page
       router.push(`/workspaces/${workspaceId}/tasks/${taskId}`);
       toast.success("Opening task...");
-    } catch (err: any) {
+    } catch {
       toast.error("Failed to open task");
     }
   };
@@ -100,7 +104,7 @@ export const NotificationBell = () => {
       });
       toast.success("Notification dismissed.");
       await refetch();
-    } catch (err: any) {
+    } catch {
       toast.error("Failed to dismiss notification");
     }
   };
@@ -141,7 +145,7 @@ export const NotificationBell = () => {
                   <div className="flex-1">
                     <p className="font-medium text-sm">Workspace Invitation</p>
                     <p className="text-xs text-muted-foreground mt-1">
-                      You've been invited to join "{invite.workspaceName}"
+                      {"You've been invited to join"} &quot;{invite.workspaceName}&quot;
                     </p>
                     <div className="flex gap-2 mt-2">
                       <Button
@@ -191,10 +195,10 @@ export const NotificationBell = () => {
                   <div className="flex-1">
                     <p className="font-medium text-sm">🎯 New Task Assignment</p>
                     <p className="text-xs text-muted-foreground mt-1">
-                      <strong>Task:</strong> "{notification.workspaceName}"
+                      <strong>Task:</strong> &quot;{notification.workspaceName}&quot;
                     </p>
                     <p className="text-xs text-muted-foreground">
-                      <strong>Project:</strong> "{notification.projectName}"
+                      <strong>Project:</strong> &quot;{notification.projectName}&quot;
                     </p>
                     <p className="text-xs text-muted-foreground">
                       <strong>Assigned:</strong> {new Date(notification.createdAt).toLocaleDateString()}

@@ -12,11 +12,22 @@ import { sessionMiddleware } from "@/lib/session-middleware";
 import { z } from "zod";
 
 // Helper function to handle Appwrite errors
-const handleAppwriteError = (error: any): { message: string; status: StatusCode } => {
+// Replace line 15 with proper typing:
+const handleAppwriteError = (error: unknown): { message: string; status: StatusCode } => {
   console.error("Appwrite error:", error);
   
-  if (error && typeof error === 'object' && 'code' in error && 'message' in error) {
-    const appwriteError = error as { code: number; message: string; type?: string };
+  // Type guard to check if error is an object with expected properties
+  if (
+    error && 
+    typeof error === 'object' && 
+    'code' in error && 
+    'message' in error
+  ) {
+    const appwriteError = error as { 
+      code: number; 
+      message: string; 
+      type?: string 
+    };
     
     switch (appwriteError.code) {
       case 401:
@@ -60,6 +71,7 @@ const handleAppwriteError = (error: any): { message: string; status: StatusCode 
   
   return { message: "An unexpected error occurred", status: 500 };
 };
+
 
 const app = new Hono()
   .get("/current", sessionMiddleware, async (c) => {

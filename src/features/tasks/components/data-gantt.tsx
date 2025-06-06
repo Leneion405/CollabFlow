@@ -154,7 +154,7 @@ export const TaskGantt = ({ data }: TaskGanttProps) => {
     addCustomStyles();
   }, [isMobile]);
 
-  const { paginatedTasks, totalPages, ganttTasks, ganttLinks, dateRange, validTasks } = useMemo(() => {
+  const {  totalPages, ganttTasks, ganttLinks, dateRange, validTasks } = useMemo(() => {
     const validTasks = data.filter(task => task.startDate && task.dueDate);
     
     if (validTasks.length === 0) {

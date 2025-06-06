@@ -11,10 +11,10 @@ import { TaskDescription } from "./task-description";
 import { useEditTaskModal } from "../hooks/use-edit-task-modal";
 import { useGetTasks } from "../api/use-get-tasks";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
-import { TaskPriority } from "../types";
+import { TaskPriority, PopulatedTask, Task } from "../types";
 
 interface TaskOverviewProps {
-  task: any; // Allow any type to match API response
+  task: PopulatedTask; // Use your existing PopulatedTask type
 }
 
 export const TaskOverview = ({ task }: TaskOverviewProps) => {
@@ -98,7 +98,7 @@ export const TaskOverview = ({ task }: TaskOverviewProps) => {
     
     return task.dependencyIds
       .map((depId: string) => {
-        const depTask = tasks.documents.find((t: any) => t.$id === depId);
+        const depTask = tasks.documents.find((t: Task) => t.$id === depId);
         return depTask ? depTask.name : `Task ${depId}`;
       })
       .filter(Boolean);

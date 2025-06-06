@@ -16,7 +16,6 @@ import { DeleteWorkspaceCard } from "@/features/workspaces/components/delete-wor
 import { useGetWorkspace } from "@/features/workspaces/api/use-get-workspace";
 import { useSearchParams, useRouter } from "next/navigation";
 import { Project } from "@/features/projects/types";
-import { Separator } from "@/components/ui/separator";
 import { RecentMembers } from "@/features/members/components/recent-members";
 import { MembersList } from "@/features/workspaces/components/members-list";
 import { Button } from "@/components/ui/button";
@@ -30,8 +29,11 @@ import {
 } from "@/components/ui/select";
 import Link from "next/link";
 import { ArrowLeft, ChevronDown, ChevronUp, Grid, List } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { cn } from "@/lib/utils";
+
+// Rest of your component code remains exactly the same...
+
 
 // Expandable text component for long descriptions
 const ExpandableText = ({ text, maxLength = 150 }: { text: string; maxLength?: number }) => {

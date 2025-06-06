@@ -1,10 +1,9 @@
 "use client";
 
-import { Fragment, useState } from "react";
+import { useState } from "react";
 import { 
   ArrowLeft, 
   MoreVertical, 
-  UserPlus, 
   Crown, 
   User, 
   Shield, 
@@ -12,7 +11,6 @@ import {
   Copy,
   Plus,
   Search,
-  Filter,
   Users,
   Menu
 } from "lucide-react";
@@ -23,7 +21,7 @@ import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 import { useDeleteMember } from "@/features/members/api/use-delete-member";
 import { useUpdateMember } from "@/features/members/api/use-update-member";
 import { useGetWorkspace } from "@/features/workspaces/api/use-get-workspace";
-import { MemberRole } from "@/features/members/types";
+import { MemberRole, MemberWithUserInfo } from "@/features/members/types";
 import { useConfirm } from "@/hooks/use-confirm";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -54,6 +52,33 @@ import { toast } from "sonner";
 import { useCurrent } from "@/features/auth/api/use-current";
 import { SendInviteEmail } from "@/features/invitations/components/send-invite-email";
 
+// Define proper types
+type WorkspaceType = {
+  $id: string;
+  name: string;
+  userId: string;
+  inviteCode: string;
+  $createdAt: string;
+  $updatedAt: string;
+};
+
+type CurrentUserType = {
+  $id: string;
+  name: string;
+  email: string;
+};
+
+interface MobileMemberCardProps {
+  member: MemberWithUserInfo;
+  workspace: WorkspaceType | undefined;
+  currentUser: CurrentUserType | undefined;
+  workspaceId: string;
+  onUpdateMember: (memberId: string, role: MemberRole) => void;
+  onDeleteMember: (memberId: string) => void;
+  isUpdatingMember: boolean;
+  isDeletingMember: boolean;
+}
+
 // Mobile Member Card Component
 const MobileMemberCard = ({ 
   member, 
@@ -64,8 +89,8 @@ const MobileMemberCard = ({
   onDeleteMember,
   isUpdatingMember,
   isDeletingMember 
-}: any) => {
-  const isWorkspaceOwner = (member: any) => workspace?.userId === member.userId;
+}: MobileMemberCardProps) => {
+  const isWorkspaceOwner = (member: MemberWithUserInfo) => workspace?.userId === member.userId;
   const isCurrentUserOwner = () => workspace?.userId === currentUser?.$id;
   
   const canManageMembers = () => {
@@ -74,7 +99,7 @@ const MobileMemberCard = ({
     return member.role === MemberRole.ADMIN;
   };
 
-  const canEditMember = (member: any) => {
+  const canEditMember = (member: MemberWithUserInfo) => {
     if (!canManageMembers()) return false;
     if (isWorkspaceOwner(member)) return false;
     if (isCurrentUserOwner()) return true;
@@ -82,12 +107,12 @@ const MobileMemberCard = ({
     return true;
   };
 
-  const getMemberRole = (member: any) => {
+  const getMemberRole = (member: MemberWithUserInfo) => {
     if (isWorkspaceOwner(member)) return "Owner";
     return member.role;
   };
 
-  const getMemberRoleDisplay = (member: any) => {
+  const getMemberRoleDisplay = (member: MemberWithUserInfo) => {
     if (isWorkspaceOwner(member)) return "Owner";
     switch (member.role) {
       case MemberRole.ADMIN:
@@ -177,7 +202,6 @@ const MobileMemberCard = ({
             </DropdownMenu>
           )}
         </div>
-
         {/* Role Badge */}
         <div className="flex items-center justify-between">
           <Badge 
@@ -255,7 +279,7 @@ export const MembersList = () => {
   };
 
   // Check if member is the workspace creator (owner)
-  const isWorkspaceOwner = (member: any) => {
+  const isWorkspaceOwner = (member: MemberWithUserInfo) => {
     return workspace?.userId === member.userId;
   };
 
@@ -277,14 +301,14 @@ export const MembersList = () => {
     return currentUserMember?.role === MemberRole.ADMIN;
   };
 
-  const getMemberRole = (member: any) => {
+  const getMemberRole = (member: MemberWithUserInfo) => {
     if (isWorkspaceOwner(member)) {
       return "Owner";
     }
     return member.role;
   };
 
-  const getMemberRoleDisplay = (member: any) => {
+  const getMemberRoleDisplay = (member: MemberWithUserInfo) => {
     if (isWorkspaceOwner(member)) {
       return "Owner";
     }
@@ -299,7 +323,7 @@ export const MembersList = () => {
   };
 
   // Check if current user can edit a specific member
-  const canEditMember = (member: any) => {
+  const canEditMember = (member: MemberWithUserInfo) => {
     if (!canManageMembers()) return false;
     if (isWorkspaceOwner(member)) return false;
     if (isCurrentUserOwner()) return true;

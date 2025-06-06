@@ -1,8 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { ArrowLeft, Save, User, Phone, Mail, FileText } from "lucide-react";
-import Link from "next/link";
+import { Save, User, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -13,7 +12,6 @@ import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { BackButton } from "@/components/back-button";
 import { useCurrent } from "../api/use-current";
 import { useUpdateProfile } from "../api/use-update-profile";
-import { toast } from "sonner";
 import { formatPhoneNumber, validatePhoneNumber } from "@/lib/phone-utils" ;
 
 export const EditProfile = () => {

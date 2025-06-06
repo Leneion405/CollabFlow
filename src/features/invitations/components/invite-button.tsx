@@ -32,8 +32,15 @@ export const InviteButton = ({
       }
 
       toast.success("Invite sent!");
-    } catch (err: any) {
-      toast.error(err.message || "Failed to send invite");
+    } catch (err: unknown) {
+      // Type guard to safely access error properties
+      if (err instanceof Error) {
+        toast.error(err.message || "Failed to send invite");
+      } else if (typeof err === 'string') {
+        toast.error(err);
+      } else {
+        toast.error("Failed to send invite");
+      }
     }
   };
 

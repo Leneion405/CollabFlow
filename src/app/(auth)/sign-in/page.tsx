@@ -7,8 +7,10 @@ const SignInPage = async () => {
     const user = await getCurrent();
     if (user) redirect("/dashboard");
     return <SignInCard />;
-  } catch (error) {
+  } catch {
+    // If user is not authenticated, show sign-in form
     return <SignInCard />;
   }
 };
+
 export default SignInPage;

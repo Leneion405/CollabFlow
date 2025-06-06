@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
+import { Member } from "../types";
 
 export function useGetAllMembers() {
-  const [data, setData] = useState<{ documents: any[] } | null>(null);
+  const [data, setData] = useState<{ documents: Member[] } | null>(null);
   const [error, setError] = useState(false);
 
   useEffect(() => {

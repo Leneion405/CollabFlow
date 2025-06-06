@@ -182,7 +182,7 @@ const app = new Hono()
         uploadedImageUrl = image;
       }
 
-      const updateData: any = {};
+      const updateData: Partial<Workspace> = {};
       if (name !== undefined) updateData.name = name;
       if (description !== undefined) updateData.description = description; // Add description
       if (uploadedImageUrl !== undefined) updateData.imageUrl = uploadedImageUrl;

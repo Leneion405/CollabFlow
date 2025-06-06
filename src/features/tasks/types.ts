@@ -31,49 +31,48 @@ export interface Task extends Models.Document {
   priority?: TaskPriority;
 }
 
-// Task with populated project and assignee
-export interface PopulatedTask extends Task {
-  project?: {
-    $id: string;
-    name: string;
-    imageUrl?: string;
-    workspaceId: string;
-    [key: string]: any;
-  } | null;
-  assignee?: {
-    $id: string;
-    name: string;
-    email: string;
-    userId: string;
-    workspaceId: string;
-    role: string;
-    [key: string]: any;
-  } | null;
-}
-
-// Flexible type for API responses
-export interface ApiTask {
-  [key: string]: any;
+// Define proper types for project and assignee
+export interface ProjectInfo {
   $id: string;
   name: string;
-  status: TaskStatus;
-  projectId: string;
+  imageUrl?: string;
   workspaceId: string;
-  position: number;
+  userId?: string;
+  $createdAt?: string;
+  $updatedAt?: string;
+}
+
+export interface AssigneeInfo {
+  $id: string;
+  name: string;
+  email: string;
+  userId: string;
+  workspaceId: string;
+  role: string;
+  phone?: string;
   description?: string;
-  assigneeId?: string;
-  startDate?: string;
-  dueDate?: string;
-  dependencyIds?: string[];
-  priority?: TaskPriority;
-  project?: any;
-  assignee?: any;
+  taskCompleted?: number;
+  $createdAt?: string;
+  $updatedAt?: string;
+}
+
+// Task with populated project and assignee
+export interface PopulatedTask extends Task {
+  project?: ProjectInfo | null;
+  assignee?: AssigneeInfo | null;
+}
+
+// Flexible type for API responses with proper typing
+export interface ApiTask extends Task {
+  project?: ProjectInfo | null;
+  assignee?: AssigneeInfo | null;
 }
 
 // Legacy interface for backwards compatibility
 export interface TaskWithProject extends Task {
   project: {
     name: string;
-    // Add other project fields if needed
+    imageUrl?: string;
+    $id?: string;
   };
 }

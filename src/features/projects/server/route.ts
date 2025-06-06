@@ -9,7 +9,6 @@ import { TaskStatus } from "@/features/tasks/types";
 import { DATABASE_ID, IMAGES_BUCKET_ID, PROJECTS_ID, TASKS_ID } from "@/config";
 import { sessionMiddleware } from "@/lib/session-middleware";
 import { createProjectSchema, updateProjectSchema } from "../schemas";
-import { Project } from "../types";
 
 const app = new Hono()
   .post(
@@ -131,68 +130,70 @@ const app = new Hono()
     return c.json({ data: project });
   })
   .patch(
-    "/:projectId",
-    sessionMiddleware,
-    zValidator("form", updateProjectSchema),
-    async (c) => {
-      const databases = c.get("databases");
-      const storage = c.get("storage");
-      const user = c.get("user");
+  "/:projectId",
+  sessionMiddleware,
+  zValidator("form", updateProjectSchema),
+  async (c) => {
+    const databases = c.get("databases");
+    const storage = c.get("storage");
+    const user = c.get("user");
 
-      const { projectId } = c.req.param();
-      const { name, image } = c.req.valid("form");
+    const { projectId } = c.req.param();
+    const { name, image } = c.req.valid("form");
 
-      const existingProject = await databases.getDocument(
-        DATABASE_ID,
-        PROJECTS_ID,
-        projectId
-      );
+    const existingProject = await databases.getDocument(
+      DATABASE_ID,
+      PROJECTS_ID,
+      projectId
+    );
 
-      const member = await getMember({
-        databases,
-        workspaceId: existingProject.workspaceId,
-        userId: user.$id,
-      });
+    const member = await getMember({
+      databases,
+      workspaceId: existingProject.workspaceId,
+      userId: user.$id,
+    });
 
-      if (!member) {
-        return c.json({ error: "Unauthorized" }, 401);
-      }
-
-      let uploadedImageUrl: string | undefined;
-
-      if (image instanceof File) {
-        const file = await storage.createFile(
-          IMAGES_BUCKET_ID,
-          ID.unique(),
-          image
-        );
-
-        const arrayBuffer = await storage.getFilePreview(
-          IMAGES_BUCKET_ID,
-          file.$id
-        );
-
-        uploadedImageUrl = `data:image/png;base64,${Buffer.from(
-          arrayBuffer
-        ).toString("base64")}`;
-      } else {
-        uploadedImageUrl = image;
-      }
-
-      const updateData: any = {};
-      if (name !== undefined) updateData.name = name;
-      if (uploadedImageUrl !== undefined) updateData.imageUrl = uploadedImageUrl;
-
-      const project = await databases.updateDocument(
-        DATABASE_ID,
-        PROJECTS_ID,
-        projectId,
-        updateData
-      );
-
-      return c.json({ data: project });
+    if (!member) {
+      return c.json({ error: "Unauthorized" }, 401);
     }
-  )
+
+    let uploadedImageUrl: string | undefined;
+
+    if (image instanceof File) {
+      const file = await storage.createFile(
+        IMAGES_BUCKET_ID,
+        ID.unique(),
+        image
+      );
+
+      const arrayBuffer = await storage.getFilePreview(
+        IMAGES_BUCKET_ID,
+        file.$id
+      );
+
+      uploadedImageUrl = `data:image/png;base64,${Buffer.from(
+        arrayBuffer
+      ).toString("base64")}`;
+    } else {
+      uploadedImageUrl = image;
+    }
+
+    // Fixed line 182 - replaced 'any' with proper typing
+    const updateData: { name?: string; imageUrl?: string } = {};
+    if (name !== undefined) updateData.name = name;
+    if (uploadedImageUrl !== undefined) updateData.imageUrl = uploadedImageUrl;
+
+    const project = await databases.updateDocument(
+      DATABASE_ID,
+      PROJECTS_ID,
+      projectId,
+      updateData
+    );
+
+    return c.json({ data: project });
+  }
+)
+
   .delete("/:projectId", sessionMiddleware, async (c) => {
     const databases = c.get("databases");
     const user = c.get("user");

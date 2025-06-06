@@ -23,7 +23,7 @@ import { useLogin } from "../api/use-login";
 import { Loader2 } from "lucide-react";
 
 export const SignInCard = () => {
-  const { mutate, isPending, error } = useLogin();
+  const { mutate, isPending } = useLogin();
 
   const form = useForm<z.infer<typeof loginSchema>>({
     resolver: zodResolver(loginSchema),
@@ -125,7 +125,7 @@ export const SignInCard = () => {
       </div>
       <CardContent className="p-7 flex items-center justify-center">
         <p>
-          Don't have an account?{" "}
+          {"Don't have an account?"}{" "}
           <Link href="/sign-up">
             <span className="text-blue-700">&nbsp;Sign Up</span>
           </Link>

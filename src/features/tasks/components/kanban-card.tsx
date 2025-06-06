@@ -22,7 +22,6 @@ export const KanbanCard = ({ task }: KanbanCardProps) => {
     $id = '',
     name = 'Untitled Task',
     project,
-    assigneeId,
     dueDate,
     // other properties
   } = task;
@@ -43,7 +42,7 @@ export const KanbanCard = ({ task }: KanbanCardProps) => {
           fallbackClassName="text-[10px]" 
         />
         <div className="size-1 rounded-full bg-neutral-300" />
-        <TaskDate value={dueDate} className="text-xs" />
+        <TaskDate value={dueDate || ""} className="text-xs" />
       </div>
       <div className="flex items-center gap-x-1.5">
         <ProjectAvatar 

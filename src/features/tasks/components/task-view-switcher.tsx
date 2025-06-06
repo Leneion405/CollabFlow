@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useState } from "react";
-import { Plus, ChevronDown } from "lucide-react";
+import { Plus } from "lucide-react";
 import { DottedSeparator } from "@/components/dotted-separator";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -23,7 +23,7 @@ import { DataCalendar } from "./data-calendar";
 import { TaskGantt } from "./data-gantt";
 import { useProjectId } from "@/features/projects/hooks/use-project-id";
 import { useBulkUpdateTasks } from "../api/use-bulk-update-tasks";
-import { TaskStatus, PopulatedTask } from "../types";
+import { TaskStatus } from "../types";
 import { columns } from "./columns";
 
 interface TaskViewSwitcherProps {

@@ -3,7 +3,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { DottedSeparator } from "@/components/dotted-separator";
-import { Badge } from "@/components/ui/badge";
 import { CalendarIcon, PlusIcon, FolderIcon } from "lucide-react";
 import Link from "next/link";
 import { format } from "date-fns";
@@ -12,7 +11,6 @@ import { useCreateProjectModal } from "@/features/projects/hooks/use-create-proj
 import { MemberAvatar } from "@/features/members/components/member-avatar";
 import { ProjectAvatar } from "@/features/projects/components/project-avatar";
 import { Project } from "@/features/projects/types";
-import { useGetWorkspace } from "@/features/workspaces/api/use-get-workspace";
 
 interface RecentProjectsProps {
   data: Project[];

@@ -4,7 +4,7 @@ import { Query } from "node-appwrite";
 import { zValidator } from "@hono/zod-validator";
 
 import { sessionMiddleware } from "@/lib/session-middleware";
-import { createAdminClient, createSessionClient } from "@/lib/appwrite";
+import { createAdminClient } from "@/lib/appwrite";
 import { DATABASE_ID, MEMBERS_ID, WORKSPACES_ID } from "@/config";
 
 import { getMember } from "../utils";

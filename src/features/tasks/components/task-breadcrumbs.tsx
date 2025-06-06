@@ -7,9 +7,27 @@ import { ProjectAvatar } from "@/features/projects/components/project-avatar";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 import { useDeleteTask } from "../api/use-delete-task";
 
+// Define proper types for project and task
+type Project = {
+  $id: string;
+  name: string;
+  imageUrl?: string;
+  workspaceId: string;
+};
+
+type Task = {
+  $id: string;
+  name: string;
+  projectId: string;
+  status: string;
+  priority?: string;
+  dueDate?: string;
+  assigneeId?: string;
+};
+
 interface TaskBreadcrumbsProps {
-  project: any; // Allow any type to match API response
-  task: any; // Allow any type to match API response
+  project: Project | null; // Allow null for cases where project might not be loaded
+  task: Task; // Task should always be present
 }
 
 export const TaskBreadcrumbs = ({ project, task }: TaskBreadcrumbsProps) => {

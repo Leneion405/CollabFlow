@@ -2,7 +2,7 @@
 
 import { z } from "zod";
 import Image from "next/image";
-import { ArrowLeftIcon, CopyIcon, ImageIcon, RefreshCwIcon, TrashIcon } from "lucide-react";
+import {  CopyIcon, ImageIcon, RefreshCwIcon, TrashIcon } from "lucide-react";
 import { toast } from "sonner";
 import { useRef } from "react";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -31,7 +31,7 @@ import { Workspace } from "../types";
 import { useUpdateWorkspace } from "../api/use-update-workspace";
 import { useConfirm } from "@/hooks/use-confirm";
 import { useResetInviteCode } from "../api/use-reset-invite-code";
-import { DottedSeparator } from "@/components/dotted-separator";
+
 
 interface EditWorkspaceFormProps {
   onCancel?: () => void;
@@ -42,7 +42,6 @@ export const EditWorkspaceForm = ({
   onCancel,
   initialValues,
 }: EditWorkspaceFormProps) => {
-  const router = useRouter();
   const { mutate, isPending } = useUpdateWorkspace();
   const { mutate: resetInviteCode, isPending: isResettingInviteCode } =
     useResetInviteCode();
