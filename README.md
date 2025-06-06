@@ -99,6 +99,10 @@ bun dev
 
 5. **Start building and customizing your workspace management solution!**
 
+## :raised_hands: Contribute
+
+You might encounter some bugs while using this app. You are more than welcome to contribute. Just submit changes via pull request and I will review them before merging. Make sure you follow community guidelines.
+
 ## Technologies Used
 
 - [Next.js](https://nextjs.org/) <br />
