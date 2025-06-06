@@ -31,15 +31,12 @@ export interface Task extends Models.Document {
   priority?: TaskPriority;
 }
 
-// Define proper types for project and assignee
-export interface ProjectInfo {
-  $id: string;
+// Enhanced ProjectInfo to match Project type requirements
+export interface ProjectInfo extends Models.Document {
   name: string;
   imageUrl?: string;
   workspaceId: string;
-  userId?: string;
-  $createdAt?: string;
-  $updatedAt?: string;
+  userId: string;
 }
 
 export interface AssigneeInfo {
@@ -87,3 +84,6 @@ export interface CalendarEvent {
   status: TaskStatus;
   id: string;
 }
+
+// Type alias for compatibility with existing Project imports
+export type Project = ProjectInfo;

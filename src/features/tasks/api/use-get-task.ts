@@ -1,5 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
+import { client } from "@/lib/rpc";
 
+// Define the expected types
+import type { PopulatedTask } from "../types"; // or wherever you store this
 
 interface UseGetTaskProps {
   taskId: string;
@@ -8,28 +11,19 @@ interface UseGetTaskProps {
 export const useGetTask = ({ taskId }: UseGetTaskProps) => {
   const query = useQuery({
     queryKey: ["task", taskId],
-    queryFn: async () => {
-      // Fixed: Use direct fetch since RPC client doesn't support individual task fetching
-      const response = await fetch(`/api/tasks/${taskId}`, {
-        method: 'GET',
-        credentials: 'include',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+    queryFn: async (): Promise<PopulatedTask> => {
+      const response = await client.api.tasks[":taskId"].$get({
+        param: { taskId },
       });
 
       if (!response.ok) {
         throw new Error("Failed to fetch task.");
       }
 
-      const json = await response.json();
-      
-      // Handle response structure properly
-      if ('data' in json) {
-        return json.data;
-      }
-      
-      return json;
+      const { data } = await response.json();
+
+      // Optionally, validate/transform `data` here if needed
+      return data as PopulatedTask;
     },
   });
 

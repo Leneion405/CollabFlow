@@ -25,23 +25,7 @@ export const TaskOverview = ({ task }: TaskOverviewProps) => {
   const { data: tasks } = useGetTasks({ workspaceId });
 
   // Get due date urgency border
-  const getDueDateBorder = (dueDate?: string) => {
-    if (!dueDate) return "";
-
-    const today = new Date();
-    const due = new Date(dueDate);
-    const diffInDays = differenceInDays(due, today);
-
-    if (diffInDays <= 3) {
-      return "border-l-4 border-l-red-500";
-    } else if (diffInDays <= 7) {
-      return "border-l-4 border-l-orange-500";
-    } else if (diffInDays <= 14) {
-      return "border-l-4 border-l-yellow-500";
-    }
-
-    return "";
-  };
+ 
 
   // Get priority badge with colored background and white text
   const getPriorityBadge = (priority?: TaskPriority) => {
@@ -107,7 +91,7 @@ export const TaskOverview = ({ task }: TaskOverviewProps) => {
   const dependencyNames = getDependencyNames();
 
   return (
-    <div className={cn("flex flex-col gap-y-4", getDueDateBorder(task.dueDate))}>
+    <div className="flex flex-col gap-y-4">
       <div className="flex items-center justify-between">
         <p className="text-lg font-semibold">Overview</p>
         <Button onClick={() => open(task.$id)} size="sm" variant="secondary">

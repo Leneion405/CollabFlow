@@ -398,6 +398,86 @@ const app = new Hono()
         return c.json({ error: message }, status as 400 | 401 | 404 | 500);
       }
     }
-  );
+  )
+  // Add this route to your existing tasks route.ts file
+.get(
+  "/:taskId",
+  sessionMiddleware,
+  async (c) => {
+    try {
+      const databases = c.get("databases");
+      const user = c.get("user");
+      const { taskId } = c.req.param();
+
+      const task = await databases.getDocument(
+        DATABASE_ID,
+        TASKS_ID,
+        taskId
+      );
+
+      const member = await getMember({
+        databases,
+        workspaceId: task.workspaceId,
+        userId: user.$id,
+      });
+
+      if (!member) {
+        return c.json({ error: "Unauthorized" }, 401);
+      }
+
+      // Get project and assignee info if needed
+      let project = null;
+      let assignee = null;
+
+      if (task.projectId) {
+        try {
+          project = await databases.getDocument(
+            DATABASE_ID,
+            PROJECTS_ID,
+            task.projectId
+          );
+        } catch {
+          // Project not found, continue
+        }
+      }
+
+      if (task.assigneeId) {
+        try {
+          const memberDoc = await databases.getDocument(
+            DATABASE_ID,
+            MEMBERS_ID,
+            task.assigneeId
+          );
+          
+          const userDoc = await databases.getDocument(
+            DATABASE_ID,
+            "users", // Adjust based on your user collection name
+            memberDoc.userId
+          );
+
+          assignee = {
+            ...memberDoc,
+            name: userDoc.name || memberDoc.name || "Unknown",
+            email: userDoc.email || memberDoc.email || "",
+          };
+        } catch {
+          // Assignee not found, continue
+        }
+      }
+
+      return c.json({ 
+        data: {
+          ...task,
+          project,
+          assignee,
+        }
+      });
+    } catch (error) {
+      return c.json({ error: "Task not found" }, 404);
+    }
+  }
+)
+
+  
 
 export default app;

@@ -1,38 +1,25 @@
 import { ChevronRightIcon, TrashIcon } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+
 import { Button } from "@/components/ui/button";
 import { useConfirm } from "@/hooks/use-confirm";
+
 import { ProjectAvatar } from "@/features/projects/components/project-avatar";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
+
 import { useDeleteTask } from "../api/use-delete-task";
-
-// Define proper types for project and task
-type Project = {
-  $id: string;
-  name: string;
-  imageUrl?: string;
-  workspaceId: string;
-};
-
-type Task = {
-  $id: string;
-  name: string;
-  projectId: string;
-  status: string;
-  priority?: string;
-  dueDate?: string;
-  assigneeId?: string;
-};
+import { PopulatedTask, ProjectInfo } from "../types";
 
 interface TaskBreadcrumbsProps {
-  project: Project | null; // Allow null for cases where project might not be loaded
-  task: Task; // Task should always be present
+  project: ProjectInfo | null; // Allow null for better type compatibility
+  task: PopulatedTask; // Use PopulatedTask for consistency
 }
 
 export const TaskBreadcrumbs = ({ project, task }: TaskBreadcrumbsProps) => {
   const workspaceId = useWorkspaceId();
   const router = useRouter();
+
   const { mutate, isPending } = useDeleteTask();
   const [ConfirmDialog, confirm] = useConfirm(
     "Delete task?",
@@ -58,49 +45,53 @@ export const TaskBreadcrumbs = ({ project, task }: TaskBreadcrumbsProps) => {
   if (!project) {
     return (
       <div className="flex items-center gap-x-2">
+        <ConfirmDialog />
         <Link href={`/workspaces/${workspaceId}`}>
-          <p className="text-lg font-semibold">Unknown Project</p>
+          <p className="text-sm lg:text-lg font-semibold text-muted-foreground hover:opacity-75 transition">
+            Unknown Project
+          </p>
         </Link>
         <ChevronRightIcon className="size-4 lg:size-5 text-muted-foreground" />
-        <p className="text-sm text-muted-foreground">{task.name}</p>
+        <p className="text-sm lg:text-lg font-semibold">{task.name}</p>
         <Button
+          onClick={handleDeleteTask}
+          disabled={isPending}
           className="ml-auto"
           variant="destructive"
           size="sm"
-          onClick={handleDeleteTask}
-          disabled={isPending}
         >
           <TrashIcon className="size-4 lg:mr-2" />
           <span className="hidden lg:block">Delete Task</span>
         </Button>
-        <ConfirmDialog />
       </div>
     );
   }
 
   return (
     <div className="flex items-center gap-x-2">
+      <ConfirmDialog />
       <ProjectAvatar
         name={project.name}
         image={project.imageUrl}
         className="size-6 lg:size-8"
       />
       <Link href={`/workspaces/${workspaceId}/projects/${project.$id}`}>
-        <p className="text-lg font-semibold">{project.name}</p>
+        <p className="text-sm lg:text-lg font-semibold text-muted-foreground hover:opacity-75 transition">
+          {project.name}
+        </p>
       </Link>
       <ChevronRightIcon className="size-4 lg:size-5 text-muted-foreground" />
-      <p className="text-sm text-muted-foreground">{task.name}</p>
+      <p className="text-sm lg:text-lg font-semibold">{task.name}</p>
       <Button
+        onClick={handleDeleteTask}
+        disabled={isPending}
         className="ml-auto"
         variant="destructive"
         size="sm"
-        onClick={handleDeleteTask}
-        disabled={isPending}
       >
         <TrashIcon className="size-4 lg:mr-2" />
         <span className="hidden lg:block">Delete Task</span>
       </Button>
-      <ConfirmDialog />
     </div>
   );
 };

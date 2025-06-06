@@ -3,6 +3,7 @@
 import { DottedSeparator } from "@/components/dotted-separator";
 import { PageError } from "@/components/page-error";
 import { PageLoader } from "@/components/page-loader";
+
 import { useGetTask } from "@/features/tasks/api/use-get-task";
 import { TaskBreadcrumbs } from "@/features/tasks/components/task-breadcrumbs";
 import { TaskOverview } from "@/features/tasks/components/task-overview";
@@ -17,20 +18,16 @@ export const TaskIdClient = () => {
   }
 
   if (!data) {
-    return <PageError message="Task not found" />;
+    return <PageError message="Task not found." />;
   }
-
-  // Use data directly instead of data.data
-  const taskData = data;
 
   return (
     <div className="flex flex-col">
-      <TaskBreadcrumbs 
-        project={taskData.project} 
-        task={taskData} 
-      />
+      <TaskBreadcrumbs project={data.project ?? null} task={data} />
       <DottedSeparator className="my-6" />
-      <TaskOverview task={taskData} />
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+        <TaskOverview task={data} />
+      </div>
     </div>
   );
 };
