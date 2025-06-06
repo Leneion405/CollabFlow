@@ -10,24 +10,21 @@ June, 2025. <br />
 
 Full-stack workspace, project, and task management platform built using Next.js 14, React, TypeScript, Shadcn UI, Tailwind CSS, Hono, and Appwrite.
 
-<<<<<<< HEAD
+
 ## Screenshots
 
-![Landing Page](/landin-demo.jpg)
-![Join/Create Workspace](/join-create-workspace-demo.jpg)
-![Dashboard](/dashboard-demo.jpg)
-![Task Table View](/task-table-demo.jpg)
-![Task Kanban View](/task-kanban-demo.jpg)
-![Task Calendar View](/task-calendar-demo.jpg)
-![Task Gantt View](/task-gantt-demo.jpg)
-![Members Management](/members-demo.jpg)
-![Settings](/setting-demo.jpg)
-![Task Notification](/task-noti-demo.jpg)
-![Task Overview](/task-overview-demo.jpg)
+![Landing Page](public/landin-demo.jpg)
+![Join/Create Workspace](public/join-create-workspace-demo.jpg)
+![Dashboard](public/dashboard-demo.jpg)
+![Task Table View](public/task-table-demo.jpg)
+![Task Kanban View](public/task-kanban-demo.jpg)
+![Task Calendar View](public/task-calendar-demo.jpg)
+![Task Gantt View](public/task-gantt-demo.jpg)
+![Members Management](public/members-demo.jpg)
+![Settings](public/setting-demo.jpg)
+![Task Notification](public/task-noti-demo.jpg)
+![Task Overview](public/task-overview-demo.jpg)
 
-
-=======
->>>>>>> 5c0483aea83be9cc9f26b67d55ea786ac787f4d3
 ## Author
 
 Kaung Thanlwin Kyaw  
