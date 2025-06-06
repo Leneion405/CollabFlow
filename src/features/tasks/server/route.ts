@@ -1,4 +1,4 @@
-import { ID, Query } from "node-appwrite";
+import { Databases, ID, Query } from "node-appwrite";
 import { Hono } from "hono";
 import { zValidator } from "@hono/zod-validator";
 import { z } from "zod";
@@ -7,10 +7,10 @@ import { sessionMiddleware } from "@/lib/session-middleware";
 import { createAdminClient } from "@/lib/appwrite";
 import { getMember } from "@/features/members/utils";
 import { createTaskSchema } from "../schemas";
-import { Task, TaskStatus, TaskPriority } from "../types";
+import { TaskStatus, TaskPriority } from "../types";
 
 // Helper function to create task assignment notification
-const createTaskNotification = async (databases: any, assigneeUserId: string, taskName: string, projectName: string, assignerName: string, taskId: string, workspaceId: string) => {
+const createTaskNotification = async (databases: Databases, assigneeUserId: string, taskName: string, projectName: string, assignerName: string, taskId: string, workspaceId: string) => {
   try {
     console.log('Creating task notification for user:', assigneeUserId);
     console.log('Task details:', { taskName, projectName, assignerName, taskId, workspaceId });
