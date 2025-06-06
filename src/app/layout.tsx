@@ -33,12 +33,12 @@ export const metadata: Metadata = {
   // Open Graph metadata for social sharing
   openGraph: {
     title: "CollabFlow - Project Management Platform",
-    description: "Streamline your team's workflow with CollabFlow",
+    description: "Project Management Platform created by Kaung Thanlwin Kyaw",
     url: "https://collab-flow-pi.vercel.app",
     siteName: "CollabFlow",
     images: [
       {
-        url: "/og-image.png", // Add this image to your public folder
+        url: "/landin-demo.png", // Add this image to your public folder
         width: 1200,
         height: 630,
         alt: "CollabFlow Project Management Platform",
@@ -52,8 +52,8 @@ export const metadata: Metadata = {
   twitter: {
     card: "summary_large_image",
     title: "CollabFlow - Project Management Platform",
-    description: "Streamline your team's workflow with CollabFlow",
-    images: ["/og-image.png"],
+    description: "Project Management Platform created by Kaung Thanlwin Kyaw",
+    images: ["/landin-demo.png"],
     creator: "@collabflow",
   },
   
