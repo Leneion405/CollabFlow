@@ -1,9 +1,8 @@
 import { PencilIcon } from "lucide-react";
-import { differenceInDays } from "date-fns";
 import { DottedSeparator } from "@/components/dotted-separator";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { snakeCaseToTitleCase, cn } from "@/lib/utils";
+import { snakeCaseToTitleCase} from "@/lib/utils";
 import { MemberAvatar } from "@/features/members/components/member-avatar";
 import { OverviewProperty } from "./overview-property";
 import { TaskDate } from "./task-date";
