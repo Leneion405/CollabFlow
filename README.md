@@ -3,12 +3,32 @@
 ![GitHub forks](https://img.shields.io/github/forks/Leneion405/CollabFlow?style=social)
 
 # CollabFlow
-CollabFlow is a workspace, project, and task management platform. Developed by Kaung Thanlwin Kyaw as a final year project for LJMU BSc Computer Network. Features multi-view tasks, real-time collaboration, and role-based access.
+CollabFlow is a open-source workspace, project, and task management platform. Developed by Kaung Thanlwin Kyaw as a final year project for LJMU BSc Computer Network. Features multi-view tasks, real-time collaboration, and role-based access.
 
 <br />
 June, 2025. <br />
 
 Full-stack workspace, project, and task management platform built using Next.js 14, React, TypeScript, Shadcn UI, Tailwind CSS, Hono, and Appwrite.
+
+## Screenshots
+
+![Landing Page](/landin-demo.jpg)
+![Join/Create Workspace](/join-create-workspace-demo.jpg)
+![Dashboard](/dashboard-demo.jpg)
+![Task Table View](/task-table-demo.jpg)
+![Task Kanban View](/task-kanban-demo.jpg)
+![Task Calendar View](/task-calendar-demo.jpg)
+![Task Gantt View](/task-gantt-demo.jpg)
+![Members Management](/members-demo.jpg)
+![Settings](/setting-demo.jpg)
+![Task Notification](/task-noti-demo.jpg)
+![Task Overview](/task-overview-demo.jpg)
+
+
+## Author
+
+Kaung Thanlwin Kyaw  
+Final Year Project for LJMU BSc Computer Network
 
 ## Features
 
@@ -103,4 +123,3 @@ bun dev
 - [sonner](https://www.npmjs.com/package/sonner) <br />
 - [tailwind-merge](https://www.npmjs.com/package/tailwind-merge) <br />
 - [zod](https://www.npmjs.com/package/zod) <br />
-

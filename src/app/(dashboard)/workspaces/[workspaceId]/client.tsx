@@ -175,22 +175,20 @@ export const WorkspaceIdClient = () => {
                 </Button>
               </div>
               
-              <Card className="mb-6">
-                <CardContent className="p-4 sm:p-6">
+              <div className="mb-6">
+                <div className="p-4 sm:p-6">
                   <EditWorkspaceForm 
                     initialValues={workspace}
                     onCancel={() => {
                       router.push(`/workspaces/${workspaceId}`);
                     }}
                   />
-                </CardContent>
-              </Card>
+                </div>
+              </div>
               
-              <Card>
-                <CardContent className="p-4 sm:p-6">
+                <div className="p-4 sm:p-6">
                   <DeleteWorkspaceCard workspace={workspace} />
-                </CardContent>
-              </Card>
+                </div>
             </div>
           </div>
         </main>
