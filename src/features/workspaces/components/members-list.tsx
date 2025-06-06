@@ -420,7 +420,7 @@ export const MembersList = () => {
   );
 
   return (
-    <div className="max-w-6xl mx-auto space-y-4 sm:space-y-8 p-4 sm:p-0">
+    <div className="max-w-20xl mx-auto space-y-4 sm:space-y-8 p-4 sm:p-0">
       {/* Header Section */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">

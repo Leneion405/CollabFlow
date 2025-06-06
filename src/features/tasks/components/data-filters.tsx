@@ -70,8 +70,23 @@ export const DataFilters = ({ hideProjectFilter, hideAssigneeFilter }: DataFilte
     setFilters({ priority: value === "all" ? null : (value as TaskPriority) });
   };
 
+  // Updated search function to filter by whole words
   const onSearchChange = (value: string) => {
     setFilters({ search: value || null });
+  };
+
+  // Helper function to check if text matches search as whole words
+  const matchesSearch = (text: string, searchTerm: string): boolean => {
+    if (!searchTerm) return true;
+    
+    // Escape special regex characters in user input
+    const escaped = searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    
+    // Split search term into words and create regex for each
+    const words = escaped.trim().split(/\s+/);
+    const regex = new RegExp(`\\b(${words.join('|')})\\b`, 'i');
+    
+    return regex.test(text);
   };
 
   // Helper functions to convert between Date and string
@@ -670,4 +685,18 @@ export const DataFilters = ({ hideProjectFilter, hideAssigneeFilter }: DataFilte
       )}
     </div>
   );
+};
+
+// Export the helper function for use in other components
+export const matchesSearch = (text: string, searchTerm: string): boolean => {
+  if (!searchTerm) return true;
+  
+  // Escape special regex characters in user input
+  const escaped = searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  
+  // Split search term into words and create regex for each
+  const words = escaped.trim().split(/\s+/);
+  const regex = new RegExp(`\\b(${words.join('|')})\\b`, 'i');
+  
+  return regex.test(text);
 };

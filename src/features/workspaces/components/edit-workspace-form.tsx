@@ -96,7 +96,7 @@ export const EditWorkspaceForm = ({
   };
 
   return (
-    <div className="max-w-10xl mx-auto space-y-8">
+    <div className="max-w-15xl mx-auto space-y-8">
       <ResetDialog />
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Main Form - Takes 2/3 width on large screens */}

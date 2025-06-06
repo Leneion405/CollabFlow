@@ -162,11 +162,11 @@ export const WorkspaceIdClient = () => {
     }
     
     return (
-      <div className="w-full h-auto py-2 px-4 sm:px-6">
+      <div className="w-full h-auto sm:px-6">
         <main>
-          <div className="w-full max-w-4xl mx-auto py-3">
+          <div className="w-full max-w-10xl mx-auto py-3">
             <div className="flex flex-col pt-0.5">
-              <div className="flex items-center gap-4 mb-6">
+              <div className="flex items-center gap-4 ">
                 <Button variant="ghost" size="sm" asChild className="h-10 px-3">
                   <Link href={`/workspaces/${workspaceId}`} className="flex items-center gap-2">
                     <ArrowLeft className="w-4 h-4" />
@@ -201,7 +201,7 @@ export const WorkspaceIdClient = () => {
     return (
       <div className="w-full h-auto py-2 px-4 sm:px-6">
         <main>
-          <div className="w-full max-w-6xl mx-auto">
+          <div className="w-full max-w-15xl mx-auto">
             <div className="flex flex-col pt-0.5">
               <MembersList />
             </div>
