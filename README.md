@@ -3,12 +3,17 @@
 ![GitHub forks](https://img.shields.io/github/forks/Leneion405/CollabFlow?style=social)
 
 # CollabFlow
-CollabFlow is a workspace, project, and task management platform. Developed by Kaung Thanlwin Kyaw as a final year project for LJMU BSc Computer Network. Features multi-view tasks, real-time collaboration, and role-based access.
+CollabFlow is a open-source workspace, project, and task management platform. Developed by Kaung Thanlwin Kyaw as a final year project for LJMU BSc Computer Network. Features multi-view tasks, real-time collaboration, and role-based access.
 
 <br />
 June, 2025. <br />
 
 Full-stack workspace, project, and task management platform built using Next.js 14, React, TypeScript, Shadcn UI, Tailwind CSS, Hono, and Appwrite.
+
+## Author
+
+Kaung Thanlwin Kyaw  
+Final Year Project for LJMU BSc Computer Network
 
 ## Features
 
