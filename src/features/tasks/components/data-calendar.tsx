@@ -22,7 +22,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { EventCard } from "./event-card";
-import { Task } from "../types";
+import { Task, CalendarEvent } from "../types";
 
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "./data-calendar.css";
@@ -38,17 +38,6 @@ const localizer = dateFnsLocalizer({
   getDay,
   locales,
 });
-
-// Define proper types for calendar events
-type CalendarEvent = {
-  start: Date;
-  end: Date;
-  title: string;
-  project: any; // You can replace with proper project type
-  assignee: any; // You can replace with proper assignee type
-  status: any; // You can replace with proper status type
-  id: string;
-};
 
 interface CustomToolbarProps {
   date: Date;
@@ -231,15 +220,15 @@ export const DataCalendar = ({ data }: DataCalendarProps) => {
 
   const [value, setValue] = useState(initialDate);
 
-  // Only add events with valid due dates - Fixed type
+  // Create calendar events with proper typing
   const events: CalendarEvent[] = data
     .filter((task) => task.dueDate && isValid(new Date(task.dueDate)))
     .map((task) => ({
       start: new Date(task.dueDate!),
       end: new Date(task.dueDate!),
       title: task.name,
-      project: task.project,
-      assignee: task.assignee,
+      project: task.project || null,
+      assignee: task.assignee || null,
       status: task.status,
       id: task.$id,
     }));
@@ -299,11 +288,10 @@ export const DataCalendar = ({ data }: DataCalendarProps) => {
             <List className="size-4 mr-2" />
             List
           </Button>
-
         </div>
       )}
 
-      {/* Desktop Calendar View - UPDATED WITH MULTIPLE TASKS SUPPORT */}
+      {/* Desktop Calendar View */}
       {!isMobile && (
         <div className="h-[700px]">
           <Calendar
@@ -313,11 +301,11 @@ export const DataCalendar = ({ data }: DataCalendarProps) => {
             views={["month"]}
             defaultView="month"
             toolbar
-            showAllEvents={false} // Enable "show more" functionality
-            popup={true} // Enable popup for overflow events
-            popupOffset={30} // Offset for popup
-            step={60} // 60 minute steps
-            timeslots={1} // 1 slot per hour
+            showAllEvents={false}
+            popup={true}
+            popupOffset={30}
+            step={60}
+            timeslots={1}
             className="h-full"
             max={new Date(new Date().setFullYear(new Date().getFullYear() + 1))}
             formats={{
@@ -339,9 +327,7 @@ export const DataCalendar = ({ data }: DataCalendarProps) => {
               ),
             }}
             onShowMore={(events, date) => {
-              // Handle show more click - you can open a modal or navigate
               console.log('Show more events for date:', date, events);
-              // Optional: Set selected date and show in a modal
               setSelectedDate(date);
             }}
           />

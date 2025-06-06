@@ -3,17 +3,15 @@ import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 
 import { MemberAvatar } from "@/features/members/components/member-avatar";
-import { Member } from "@/features/members/types";
 import { ProjectAvatar } from "@/features/projects/components/project-avatar";
-import { Project } from "@/features/projects/types";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 
-import { TaskStatus } from "../types";
+import { TaskStatus, AssigneeInfo, ProjectInfo } from "../types";
 
 interface EventCardProps {
   title: string;
-  assignee: Member;
-  project: Project;
+  assignee: AssigneeInfo | null; // Changed from Member
+  project: ProjectInfo | null;   // Changed from Project
   status: TaskStatus;
   id: string;
   compact?: boolean;
@@ -66,7 +64,7 @@ export const EventCard = ({
     );
   }
 
-  // Desktop view - RESTORED to original design
+  // Desktop view - Handle null cases properly
   return (
     <div className="px-2">
       <div

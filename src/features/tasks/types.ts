@@ -76,3 +76,14 @@ export interface TaskWithProject extends Task {
     $id?: string;
   };
 }
+
+// Calendar Event type for data-calendar component
+export interface CalendarEvent {
+  start: Date;
+  end: Date;
+  title: string;
+  project: ProjectInfo | null;
+  assignee: AssigneeInfo | null;
+  status: TaskStatus;
+  id: string;
+}
