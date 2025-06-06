@@ -130,10 +130,10 @@ export const RecentMembers = ({ data, total }: RecentMembersProps) => {
               <div className="hidden sm:block">
                 <div className="space-y-3">
                   {sortedMembers.map((member) => (
-                    <Link 
-                      key={member.$id}
-                      href={`/workspaces/${workspaceId}/members/${member.$id}`}
-                    >
+                      <Link 
+                        key={member.$id}
+                        href={`/workspaces/${workspaceId}/members/${member.$id}`}
+                      >
                       <Card className="shadow-none rounded-lg hover:shadow-md hover:bg-accent/50 transition-all duration-200">
                         <CardContent className="p-4">
                           <div className="flex items-center justify-between">
