@@ -11,7 +11,7 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "CollabFlow - Project Management Platform",
-  description: "Streamline your team's workflow with CollabFlow - the ultimate project management and collaboration platform",
+  description: "Streamline your team's workflow with CollabFlow - the ultimate project management and collaboration platform created by Kaung Thanlwin Kyaw",
   keywords: ["project management", "collaboration", "team workflow", "task management"],
   authors: [{ name: "Kaung Thanlwin Kyaw" }],
   creator: "Kaung Thanlwin Kyaw",
@@ -33,12 +33,12 @@ export const metadata: Metadata = {
   // Open Graph metadata for social sharing
   openGraph: {
     title: "CollabFlow - Project Management Platform",
-    description: "Project Management Platform created by Kaung Thanlwin Kyaw",
+    description: "Project Management Platform created by Kaung Thanlwin Kyaw - Streamline your team's workflow with the ultimate collaboration platform",
     url: "https://collab-flow-pi.vercel.app",
     siteName: "CollabFlow",
     images: [
       {
-        url: "/landin-demo.png", // Add this image to your public folder
+        url: "https://collab-flow-pi.vercel.app/landin-demo.jpg", // Absolute URL for Teams compatibility
         width: 1200,
         height: 630,
         alt: "CollabFlow Project Management Platform",
@@ -48,17 +48,18 @@ export const metadata: Metadata = {
     type: "website",
   },
   
-  // Twitter Card metadata
+  // Twitter Card metadata (Teams prioritizes these)
   twitter: {
     card: "summary_large_image",
     title: "CollabFlow - Project Management Platform",
     description: "Project Management Platform created by Kaung Thanlwin Kyaw",
-    images: ["/landin-demo.png"],
-    creator: "@collabflow",
+    images: ["https://collab-flow-pi.vercel.app/landin-demo.jpg"], // Absolute URL
+    creator: "@KaungThanlwinKyaw",
+    site: "@collabflow",
   },
   
   // Additional metadata
-  manifest: "/manifest.json", // Add this file for PWA support
+  manifest: "/manifest.json",
   themeColor: "#000000",
   viewport: "width=device-width, initial-scale=1",
   robots: {
@@ -72,6 +73,15 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  
+  // Additional meta for better compatibility
+  other: {
+    "og:image:width": "1200",
+    "og:image:height": "630",
+    "og:image:type": "image/jpeg",
+    "twitter:image:width": "1200",
+    "twitter:image:height": "630",
+  },
 };
 
 export default function RootLayout({
@@ -82,10 +92,37 @@ export default function RootLayout({
   return (
     <html lang="en">
       <head>
-        {/* Additional meta tags for better SEO */}
+        {/* Essential meta tags for Teams compatibility */}
         <meta name="theme-color" content="#000000" />
         <meta name="msapplication-TileColor" content="#000000" />
         <link rel="canonical" href="https://collab-flow-pi.vercel.app" />
+        
+        {/* Twitter meta tags (Teams prioritizes these) */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:site" content="@collabflow" />
+        <meta name="twitter:creator" content="@collabflow" />
+        <meta name="twitter:title" content="CollabFlow - Project Management Platform" />
+        <meta name="twitter:description" content="Project Management Platform created by Kaung Thanlwin Kyaw" />
+        <meta name="twitter:image" content="https://collab-flow-pi.vercel.app/landin-demo.jpg" />
+        <meta name="twitter:image:width" content="1200" />
+        <meta name="twitter:image:height" content="630" />
+        
+        {/* Open Graph meta tags */}
+        <meta property="og:type" content="website" />
+        <meta property="og:title" content="CollabFlow - Project Management Platform" />
+        <meta property="og:description" content="Project Management Platform created by Kaung Thanlwin Kyaw" />
+        <meta property="og:url" content="https://collab-flow-pi.vercel.app" />
+        <meta property="og:site_name" content="CollabFlow" />
+        <meta property="og:image" content="https://collab-flow-pi.vercel.app/landin-demo.jpg" />
+        <meta property="og:image:width" content="1200" />
+        <meta property="og:image:height" content="630" />
+        <meta property="og:image:type" content="image/jpeg" />
+        <meta property="og:locale" content="en_US" />
+        
+        {/* Additional meta for better SEO */}
+        <meta name="author" content="Kaung Thanlwin Kyaw" />
+        <meta name="robots" content="index, follow" />
+        <meta name="googlebot" content="index, follow, max-video-preview:-1, max-image-preview:large, max-snippet:-1" />
       </head>
       <body className={cn(inter.className, "antialiased min-h-screen")}>
         <QueryProvider>
