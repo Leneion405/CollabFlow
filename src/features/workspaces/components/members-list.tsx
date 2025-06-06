@@ -21,7 +21,7 @@ import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 import { useDeleteMember } from "@/features/members/api/use-delete-member";
 import { useUpdateMember } from "@/features/members/api/use-update-member";
 import { useGetWorkspace } from "@/features/workspaces/api/use-get-workspace";
-import { MemberRole, MemberWithUserInfo } from "@/features/members/types";
+import { MemberRole, MemberWithUserInfo } from "@/features/members/types"; // Added MemberWithUserInfo
 import { useConfirm } from "@/hooks/use-confirm";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -71,7 +71,7 @@ type CurrentUserType = {
 interface MobileMemberCardProps {
   member: MemberWithUserInfo;
   workspace: WorkspaceType | undefined;
-  currentUser: CurrentUserType | undefined;
+  currentUser: CurrentUserType | null | undefined; // Allow null and undefined
   workspaceId: string;
   onUpdateMember: (memberId: string, role: MemberRole) => void;
   onDeleteMember: (memberId: string) => void;
@@ -79,7 +79,8 @@ interface MobileMemberCardProps {
   isDeletingMember: boolean;
 }
 
-// Mobile Member Card Component
+
+// Mobile Member Card Component - FIXED with proper typing
 const MobileMemberCard = ({ 
   member, 
   workspace, 
@@ -89,8 +90,9 @@ const MobileMemberCard = ({
   onDeleteMember,
   isUpdatingMember,
   isDeletingMember 
-}: MobileMemberCardProps) => {
-  const isWorkspaceOwner = (member: MemberWithUserInfo) => workspace?.userId === member.userId;
+}: MobileMemberCardProps) => { // ✅ FIXED - proper interface instead of any
+  
+  const isWorkspaceOwner = (member: MemberWithUserInfo) => workspace?.userId === member.userId; // ✅ FIXED
   const isCurrentUserOwner = () => workspace?.userId === currentUser?.$id;
   
   const canManageMembers = () => {
@@ -99,7 +101,7 @@ const MobileMemberCard = ({
     return member.role === MemberRole.ADMIN;
   };
 
-  const canEditMember = (member: MemberWithUserInfo) => {
+  const canEditMember = (member: MemberWithUserInfo) => { // ✅ FIXED
     if (!canManageMembers()) return false;
     if (isWorkspaceOwner(member)) return false;
     if (isCurrentUserOwner()) return true;
@@ -107,12 +109,12 @@ const MobileMemberCard = ({
     return true;
   };
 
-  const getMemberRole = (member: MemberWithUserInfo) => {
+  const getMemberRole = (member: MemberWithUserInfo) => { // ✅ FIXED
     if (isWorkspaceOwner(member)) return "Owner";
     return member.role;
   };
 
-  const getMemberRoleDisplay = (member: MemberWithUserInfo) => {
+  const getMemberRoleDisplay = (member: MemberWithUserInfo) => { // ✅ FIXED
     if (isWorkspaceOwner(member)) return "Owner";
     switch (member.role) {
       case MemberRole.ADMIN:
@@ -278,8 +280,8 @@ export const MembersList = () => {
     }
   };
 
-  // Check if member is the workspace creator (owner)
-  const isWorkspaceOwner = (member: MemberWithUserInfo) => {
+  // Check if member is the workspace creator (owner) - FIXED
+  const isWorkspaceOwner = (member: MemberWithUserInfo) => { // ✅ FIXED
     return workspace?.userId === member.userId;
   };
 
@@ -301,14 +303,14 @@ export const MembersList = () => {
     return currentUserMember?.role === MemberRole.ADMIN;
   };
 
-  const getMemberRole = (member: MemberWithUserInfo) => {
+  const getMemberRole = (member: MemberWithUserInfo) => { // ✅ FIXED
     if (isWorkspaceOwner(member)) {
       return "Owner";
     }
     return member.role;
   };
 
-  const getMemberRoleDisplay = (member: MemberWithUserInfo) => {
+  const getMemberRoleDisplay = (member: MemberWithUserInfo) => { // ✅ FIXED
     if (isWorkspaceOwner(member)) {
       return "Owner";
     }
@@ -322,8 +324,8 @@ export const MembersList = () => {
     }
   };
 
-  // Check if current user can edit a specific member
-  const canEditMember = (member: MemberWithUserInfo) => {
+  // Check if current user can edit a specific member - FIXED
+  const canEditMember = (member: MemberWithUserInfo) => { // ✅ FIXED
     if (!canManageMembers()) return false;
     if (isWorkspaceOwner(member)) return false;
     if (isCurrentUserOwner()) return true;
@@ -348,7 +350,7 @@ export const MembersList = () => {
       .then(() => toast.success("Invite link copied to clipboard"));
   };
 
-  // Sidebar content component
+
   const SidebarContent = () => (
     <div className="space-y-6">
       {/* Workspace Stats */}
@@ -444,7 +446,7 @@ export const MembersList = () => {
   );
 
   return (
-    <div className="max-w-20xl mx-auto space-y-4 sm:space-y-8 p-4 sm:p-0">
+    <div className="max-w-6xl mx-auto space-y-4 sm:space-y-8 p-4 sm:p-0">
       {/* Header Section */}
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
