@@ -1,0 +1,21 @@
+{
+  "name": "CollabFlow",
+  "short_name": "CollabFlow",
+  "description": "Project Management Platform",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "/apple-logo.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}
