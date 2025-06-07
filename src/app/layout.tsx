@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 import { cn } from "@/lib/utils";
 import { Toaster } from "sonner";
@@ -38,7 +39,7 @@ export const metadata: Metadata = {
     siteName: "CollabFlow",
     images: [
       {
-        url: "https://collab-flow-pi.vercel.app/landin-demo.jpg", // Absolute URL for Teams compatibility
+        url: "https://collab-flow-pi.vercel.app/landin-demo.jpg",
         width: 1200,
         height: 630,
         alt: "CollabFlow Project Management Platform",
@@ -48,12 +49,12 @@ export const metadata: Metadata = {
     type: "website",
   },
   
-  // Twitter Card metadata (Teams prioritizes these)
+  // Twitter Card metadata
   twitter: {
     card: "summary_large_image",
     title: "CollabFlow - Project Management Platform",
     description: "Project Management Platform created by Kaung Thanlwin Kyaw",
-    images: ["https://collab-flow-pi.vercel.app/landin-demo.jpg"], // Absolute URL
+    images: ["https://collab-flow-pi.vercel.app/landin-demo.jpg"],
     creator: "@KaungThanlwinKyaw",
     site: "@collabflow",
   },
@@ -97,7 +98,7 @@ export default function RootLayout({
         <meta name="msapplication-TileColor" content="#000000" />
         <link rel="canonical" href="https://collab-flow-pi.vercel.app" />
         
-        {/* Twitter meta tags (Teams prioritizes these) */}
+        {/* Twitter meta tags */}
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:site" content="@collabflow" />
         <meta name="twitter:creator" content="@collabflow" />
@@ -128,6 +129,7 @@ export default function RootLayout({
         <QueryProvider>
           <Toaster />
           {children}
+          <SpeedInsights />
         </QueryProvider>
       </body>
     </html>
