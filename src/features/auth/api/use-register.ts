@@ -17,10 +17,12 @@ export const useRegister = () => {
       
       if (!response.ok) {
         const errorData = await response.json();
-        // Type guard to check if errorData has an error property
-        if ('error' in errorData) {
+        
+        // Extract the error message from the response
+        if ('error' in errorData && typeof errorData.error === 'string') {
           throw new Error(errorData.error);
         }
+        
         throw new Error("Registration failed");
       }
       
@@ -33,7 +35,24 @@ export const useRegister = () => {
       router.refresh();
     },
     onError: (error) => {
-      toast.error(error.message || "Failed to create account");
+      console.error("Registration error:", error);
+      
+      const errorMessage = error.message;
+      
+      // Handle specific error messages
+      if (errorMessage.includes("already exists")) {
+        toast.error("This email is already registered. Please use a different email or sign in instead.");
+      } else if (errorMessage.includes("agree to")) {
+        toast.error("You must agree to the Privacy Policy and Terms of Service to continue.");
+      } else if (errorMessage.includes("Password must be at least")) {
+        toast.error("Password must be at least 8 characters long.");
+      } else if (errorMessage.includes("Name") && errorMessage.includes("required")) {
+        toast.error("Please enter your name.");
+      } else if (errorMessage.includes("valid email")) {
+        toast.error("Please enter a valid email address.");
+      } else {
+        toast.error(errorMessage || "Failed to create account");
+      }
     },
   });
 

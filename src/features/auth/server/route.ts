@@ -122,44 +122,49 @@ const app = new Hono()
   })
   
   .post("/register", zValidator("json", registerSchema), async (c) => {
-    try {
-      const { name, email, password } = c.req.valid("json");
+  try {
+    const { name, email, password, agreeToTerms } = c.req.valid("json");
 
-      if (!name || !email || !password) {
-        return c.json({ error: "Name, email, and password are required" }, 400);
-      }
-
-      const { account } = await createAdminClient();
-      
-      // Create user account
-      const user = await account.create(ID.unique(), email, password, name);
-      
-      if (!user) {
-        return c.json({ error: "Failed to create user account" }, 500);
-      }
-
-      // Create session
-      const session = await account.createEmailPasswordSession(email, password);
-      
-      if (!session || !session.secret) {
-        return c.json({ error: "Account created but failed to log in. Please try logging in manually" }, 500);
-      }
-
-      setCookie(c, AUTH_COOKIE, session.secret, {
-        path: "/",
-        httpOnly: true,
-        sameSite: "strict",
-        secure: process.env.NODE_ENV === "production",
-        maxAge: 60 * 60 * 24 * 30,
-      });
-
-      return c.json({ success: true });
-    } catch (error) {
-      console.error("Registration error:", error);
-      const { message, status } = handleAppwriteError(error);
-      return c.json({ error: message }, status);
+    if (!name || !email || !password) {
+      return c.json({ error: "Name, email, and password are required" }, 400);
     }
-  })
+
+    if (!agreeToTerms) {
+      return c.json({ error: "You must agree to the Privacy Policy and Terms of Service" }, 400);
+    }
+
+    const { account } = await createAdminClient();
+    
+    // Create user account
+    const user = await account.create(ID.unique(), email, password, name);
+    
+    if (!user) {
+      return c.json({ error: "Failed to create user account" }, 500);
+    }
+
+    // Create session
+    const session = await account.createEmailPasswordSession(email, password);
+    
+    if (!session || !session.secret) {
+      return c.json({ error: "Account created but failed to log in. Please try logging in manually" }, 500);
+    }
+
+    setCookie(c, AUTH_COOKIE, session.secret, {
+      path: "/",
+      httpOnly: true,
+      sameSite: "strict",
+      secure: process.env.NODE_ENV === "production",
+      maxAge: 60 * 60 * 24 * 30,
+    });
+
+    return c.json({ success: true });
+  } catch (error) {
+    console.error("Registration error:", error);
+    const { message, status } = handleAppwriteError(error);
+    return c.json({ error: message }, status);
+  }
+})
+
   
   .post("/logout", sessionMiddleware, async (c) => {
     try {
